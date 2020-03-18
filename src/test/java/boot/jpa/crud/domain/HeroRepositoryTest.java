@@ -11,10 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.isA;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -90,6 +93,7 @@ public class HeroRepositoryTest {
         assertThat(output.size(), is(10));
     }
 
+    // 해당 id의 객체를 찾아올 수 있는지 확인
     @Test
     public void HeroFindByIdResponseTest() {
         // given
@@ -111,8 +115,41 @@ public class HeroRepositoryTest {
         assertThat(input.getNote(), is(output.getNote()));
     }
 
-    
+    // update가 잘 되는지 확인
+    @Test
+    public void HeroUpdateRequestTest() {
+        // given
+        Hero input = Hero.builder()
+                .name("Jun")
+                .age(29)
+                .note("Hello Java")
+                .build();
 
+        heroRepository.save(input);
 
+        // when
+        heroRepository.save(Hero.builder()
+                .id(1L)
+                .name("Jun")
+                .age(29)
+                .note("Hello Java")
+                .build());
+
+        // then
+        Hero output = heroRepository.findById(1L).orElse(null);
+
+        assertThat(input.getId(), is(output.getId()));
+        assertThat(toStringCreatedDate(input.getCreatedDate()), is(toStringCreatedDate(output.getCreatedDate())));
+        assertTrue(output.getModifiedDate()
+                .isAfter(input.getModifiedDate()));
+    }
+
+    // date format
+    public String toStringCreatedDate(LocalDateTime createdDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return Optional.ofNullable(createdDate)
+                .map(formatter::format)
+                .orElse("");
+    }
 
 }
