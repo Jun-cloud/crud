@@ -41,6 +41,7 @@ public class Hero extends BaseTimeEntity {
     // @Builder : 해당 클래스의 빌더패턴 클래스를 생성해주고, 생성자 상단에 선언하면 생성자에 포함된 필드만 빌더에 포함한다.
     @Builder
     public Hero(Long id, String name, int age, String note) {
+        this.id = id;
         this.name = name;
         this.age = age;
         this.note = note;

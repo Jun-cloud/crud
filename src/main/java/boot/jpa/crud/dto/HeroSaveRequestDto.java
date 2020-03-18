@@ -17,9 +17,9 @@ public class HeroSaveRequestDto {
     public Hero toEntity() {
 
         return Hero.builder()
-                .name(this.name)
-                .age(this.age)
-                .note(this.note)
+                .name(name)
+                .age(age)
+                .note(note)
                 .build();
     }
 

@@ -17,10 +17,10 @@ public class HeroUpdateRequestDto {
 
     public Hero toEntity() {
         return Hero.builder()
-                .id(this.id)
-                .name(this.name)
-                .age(this.age)
-                .note(this.note)
+                .id(id)
+                .name(name)
+                .age(age)
+                .note(note)
                 .build();
     }
 
