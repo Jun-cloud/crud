@@ -18,6 +18,7 @@ import java.util.stream.IntStream;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.isA;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -150,6 +151,23 @@ public class HeroRepositoryTest {
         return Optional.ofNullable(createdDate)
                 .map(formatter::format)
                 .orElse("");
+    }
+
+    // delete가 잘 되는지 확인
+    @Test
+    public void HeroDeleteRequestTest() {
+        // given
+        heroRepository.save(Hero.builder()
+                .name("Jun")
+                .age(29)
+                .note("Hello Java")
+                .build());
+
+        // when
+        heroRepository.deleteById(1L);
+
+        // then
+        assertNull(heroRepository.findById(1L).orElse(null));
     }
 
 }
