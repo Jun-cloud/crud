@@ -7,6 +7,8 @@ import boot.jpa.crud.service.HeroService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.stream.IntStream;
+
 @RestController
 @AllArgsConstructor
 public class HeroRestController {
@@ -15,6 +17,14 @@ public class HeroRestController {
 
     @PostMapping("/save")
     public Long HeroSaveRequest(@RequestBody HeroSaveRequestDto dto) {
+
+        IntStream.rangeClosed(0, 100).forEach(i ->
+                heroService.HeroSaveRequest(HeroSaveRequestDto.builder()
+                        .name("Jun")
+                        .age(i)
+                        .note("Hello")
+                        .build()));
+
         return heroService.HeroSaveRequest(dto);
     }
 
