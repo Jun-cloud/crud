@@ -64,7 +64,7 @@ index = {
             alert('Please try again');
         });
     },
-    deleteById : function (id) {
+    deleteById : function (id, totalElements, size, page) {
         $.ajax({
             url: '/delete',
             type: 'delete',
@@ -72,7 +72,12 @@ index = {
             dataType: 'json',
             contentType: 'application/json; charset=utf-8'
         }).done(function () {
-            location.reload();
+            if (totalElements % size === 1) {
+                location.herf = "/?page=" + page;
+            } else {
+                page++;
+                location.href = "/?page=" + page;
+            }
         }).fail(function () {
             alert('Please try again');
         })
@@ -91,6 +96,6 @@ function update() {
     index.update();
 }
 
-function deleteById(id) {
-    index.deleteById(id);
+function deleteById(id, totalElements, size, page) {
+    index.deleteById(id, totalElements, size, page);
 }

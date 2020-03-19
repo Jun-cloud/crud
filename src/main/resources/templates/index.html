@@ -39,7 +39,7 @@
             </td>
             <td>
                 <a href="#!" th:text="delete"
-                   th:onclick="|javascript:deleteById(*{id})|">
+                   th:onclick="|javascript:deleteById(*{id}, ${pages.totalElements}, ${pages.size}, ${pages.getNumber()})|">
                 </a>
             </td>
         </tr>
