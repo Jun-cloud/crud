@@ -8,6 +8,9 @@ import boot.jpa.crud.dto.HeroSaveRequestDto;
 import boot.jpa.crud.dto.HeroUpdateRequestDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.annotation.ReadOnlyProperty;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,13 +31,19 @@ public class HeroService {
 
     @Transactional
     @ReadOnlyProperty
-    public List<HeroFindAllResponseDto> HeroFindAllResponse() {
+    public Page<HeroFindAllResponseDto> HeroFindAllResponse(Pageable pageable) {
         // stream
         // stream().map(dto) : dto에 맞게 자동으로 매핑
         // .collect(Collectors.toList()) : List형태로 변환
-        return heroRepository.findAll().stream()
-                .map(HeroFindAllResponseDto::new)
-                .collect(Collectors.toList());
+//        return heroRepository.findAll().stream()
+//                .map(HeroFindAllResponseDto::new)
+//                .collect(Collectors.toList());
+
+        // getPageNumber() : 현재 페이지를 리턴
+        int page = pageable.getPageNumber() == 0 ? 0 : pageable.getPageNumber() -1;
+        // PageRequest.of(page, 5) : 한 페이지의 몇개의 데이터가 들어갈지
+        pageable = PageRequest.of(page, 5);
+        return heroRepository.HeroFindAllResponse(pageable);
     }
 
     @Transactional
