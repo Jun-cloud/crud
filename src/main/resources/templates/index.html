@@ -23,7 +23,7 @@
         </thead>
 
         <tbody>
-        <tr th:each="hero : ${list}" th:object="${hero}">
+        <tr th:each="hero : ${pages}" th:object="${hero}">
             <!-- th:object="${hero}" thymeleaf가 있기 때문에 -->
             <!-- ${hero.getName()} 이런 형식을  th:text="*{name}" 로 간단히 표현 가능 -->
             <td th:text="*{name}"></td>
@@ -48,17 +48,17 @@
 
     <!-- th:with 모델에 들어있는 값을 사용하기 위해 -->
     <ul class="pagination" th:with="start = ${start}, last = ${last}">
-        <li><a th:href="@{/page = 1}" th:text="First"  aria-label="First"></a></li>
+        <li><a th:href="@{/(page = 1)}" th:text="First"  aria-label="First"></a></li>
 
         <li th:class="${pages.first} ? 'disabled'">
-            <a th:href="${pages.first} ? '#' : @{/(page = {pages.getNumber()})}">
+            <a th:href="${pages.first} ? '#' : @{/(page = ${pages.getNumber()})}">
                 <i class="material-icons">chevron_left</i></a></li>
 
         <li th:each="page : ${#numbers.sequence(start, last)}" th:class="${page == pages.getNumber() + 1} ? 'active'">
             <a th:href="@{/(page = ${page})}" th:text="${page}"></a></li>
 
         <li th:class="${pages.last} ? 'disabled'">
-            <a th:href="${pages.last} ? '#' : @{/(${pages.getNumber() + 2})}">
+            <a th:href="${pages.last} ? '#' : @{/(page = ${pages.getNumber() + 2})}">
                 <i class="material-icons">chevron_right</i></a></li>
 
         <li><a th:href="@{/(page = ${pages.totalPages})}" th:text="Last" aria-label="Last"></a></li>
