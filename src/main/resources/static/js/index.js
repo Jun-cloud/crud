@@ -73,7 +73,7 @@ index = {
             contentType: 'application/json; charset=utf-8'
         }).done(function () {
             if (totalElements % size === 1) {
-                location.herf = "/?page=" + page;
+                location.href = "/?page=" + page;
             } else {
                 page++;
                 location.href = "/?page=" + page;
